@@ -29,7 +29,7 @@ class WickedPdf
   end
 
   def pdf_from_string(string, options={})
-    command = "\"#{@exe_path}\" #{'-q ' unless on_windows?}#{parse_options(options)} - - " # -q for no errors on stdout
+    command = "\"#{@exe_path}\" #{'' unless on_windows?}#{parse_options(options)} - - 2> #{ Rails.root}/log/wicked.log" # -q for no errors on stdout
     print_command(command) if in_development_mode?
     pdf, err = Open3.popen3(command) do |stdin, stdout, stderr|
       stdin.binmode
